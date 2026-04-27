@@ -3,25 +3,30 @@ def rank_transform(values):
     Replace each value with its average rank.
     """
     # Write code here
-    n = len(values)
-    # Pair each value with its original index
-    indexed = [(val, i) for i, val in enumerate(values)]
-    # Sort by value
-    indexed.sort(key=lambda x: x[0])
+    idxs = [(val, i) for i, val in enumerate(values)]
+    idxs.sort(key = lambda x: x[0])
+    print (idxs)
 
+    n = len(values)
+    rk = 0
     ranks = [0.0] * n
     i = 0
     while i < n:
-        j = i
-        # Find all indices with the same value
-        while j + 1 < n and indexed[j + 1][0] == indexed[i][0]:
+        rk += 1
+        cnt = rk
+        j = i + 1
+        while j < n and idxs[j][0] == idxs[i][0]:
+            rk += 1
+            cnt += rk
             j += 1
-        # For positions i..j (0-based in sorted order),
-        # 1-based ranks are (i+1) to (j+1)
-        avg_rank = ( (i + 1) + (j + 1) ) / 2.0
-        for k in range(i, j + 1):
-            _, orig_idx = indexed[k]
-            ranks[orig_idx] = avg_rank
-        i = j + 1
+            
+        for k in range(i, j):
+            ranks[idxs[k][1]] = cnt / (j - i)
 
+        i = j
+            
+    print (ranks)
+    
     return ranks
+
+rank_transform([10, 30, 30, 30, 20])
