@@ -7,7 +7,7 @@ def selu(x, lam=1.0507009873554804934193349852946, alpha=1.673263242354377284817
     """
     # Write code here
     # x = np.asarray(x)
-    arr = np.atleast_1d(np.asarray(x, dtype=float))
+    arr = np.asarray(x, dtype=float)
     
     # SELU 公式
     out = np.where(arr > 0, lam * arr, lam * alpha * (np.exp(arr) - 1))
